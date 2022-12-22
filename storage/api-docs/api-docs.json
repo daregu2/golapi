@@ -1,0 +1,198 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "GolApp",
+        "description": "Documentacion del api de GolApp",
+        "contact": {
+            "email": "testing@upeu.edu.pe"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://golapi.test/api",
+            "description": "GolApp API endpoints"
+        }
+    ],
+    "paths": {
+        "/api": {},
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Genera un token al ingresar al sistema.",
+                "description": "Accede al sistema.",
+                "operationId": "8cb7742ae98d0990acb2907c4e00bf24",
+                "requestBody": {
+                    "description": "Credenciales para iniciar sesión",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Destruye el token de la sesion.",
+                "description": "Cerrar sesión del sistema.",
+                "operationId": "0d29c740dc06d77602af8095bf4654cc",
+                "responses": {
+                    "201": {
+                        "description": "Ok.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/user/upload-avatar": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Actualiza el avatar del usuario",
+                "description": "Sube imagen al servidor.",
+                "operationId": "094803c88804032f812b1a5a8554d920",
+                "requestBody": {
+                    "description": "Datos en formato 'multipart/form-data'",
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "avatar": {
+                                        "title": "Avatar",
+                                        "description": "Imagen en formato .jpg,.jpeg,.png",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/user/profile": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Retorna todos los datos del usuario autenticado.",
+                "description": "Datos del usuario autenticado.",
+                "operationId": "14529bd636687e89e4d8a631b848badf",
+                "responses": {
+                    "200": {
+                        "description": "Ok.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "title": "Usuario",
+                "description": "",
+                "required": [
+                    "name",
+                    "password"
+                ],
+                "properties": {
+                    "name": {
+                        "schema": "User",
+                        "title": "name",
+                        "description": "Nombre de usuario",
+                        "type": "string",
+                        "default": "206461532"
+                    },
+                    "password": {
+                        "schema": "User",
+                        "title": "password",
+                        "description": "Contraseña",
+                        "type": "password",
+                        "default": ""
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "auth",
+            "description": "Modulo de autenticación"
+        },
+        {
+            "name": "user",
+            "description": "Modulo de gestion de Usuarios"
+        },
+        {
+            "name": "person",
+            "description": "Gestion de estudiantes, tutores..."
+        }
+    ]
+}
